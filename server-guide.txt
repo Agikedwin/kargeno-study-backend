@@ -1,0 +1,42 @@
+  user_id  //https://www.youtube.com/watch?v=n1mdAPFq2Os
+  
+  mongodb joins :  https://www.delftstack.com/howto/mongodb/mongodb-join-two-collections/
+  mongodb populate: https://dev.to/paras594/how-to-use-populate-in-mongoose-node-js-mo0
+  mongo docs : https://www.mongodb.com/docs/manual/reference/operator/aggregation/lookup/
+
+  client_code
+  date_created
+  date_updated
+  designation_id
+  designation_name
+  dob
+  editor
+  email
+  level_name
+  other_names
+  password
+  phone_no
+  surname
+  user_level
+  username
+  location_id
+  
+  ==================user Level=================
+  level_id
+  date_created
+  date_updated
+  description
+  editor
+  level_name
+  userid
+  =================Designation=================
+  designation_id
+  date_created 
+  date_updated 
+  description 
+  designation_name 
+  editor 
+  level_id 
+  level_name
+  userid 
+  =========================
