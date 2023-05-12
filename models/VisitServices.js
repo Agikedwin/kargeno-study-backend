@@ -6,8 +6,8 @@ const visitServicesSchema = new Schema({
     duration: String,
     description: String,
     visitId:  Schema.ObjectId,
-    date_created:  Date,
-    date_updated:  Date,
+    date_created:  String,
+   date_updated:  String,
     status: String,
 
 

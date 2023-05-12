@@ -1,19 +1,19 @@
 const { model, Schema}  = require('mongoose');
 
-const phoneCallVisits = new Schema({
+const recheduledVisitsSChema = new Schema({
+    physicalVisitId: Schema.ObjectId,
     userId: Schema.ObjectId,
     visitId: Schema.ObjectId,
-    physicalVisitId: Schema.ObjectId,
-    date_created:  String,
-   date_updated:  String,
-    visitStatus: Boolean,
+    rescheduled_date: String,
     visit_date: String,
+    date_created:  String,
+    date_updated:  String,
     status: Number,
 
 
     userRef: {
         type: Schema.Types.ObjectId,
-        ref: 'user'
+        ref: 'User'
       },
 
     visitsRef: {
@@ -23,4 +23,4 @@ const phoneCallVisits = new Schema({
 
 });
 
-module.exports = model('phoneCallVisits', phoneCallVisits);
+module.exports = model('recheduledVisits', recheduledVisitsSChema);

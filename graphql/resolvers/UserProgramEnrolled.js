@@ -24,9 +24,9 @@ const visitsModel = {
     userId: Schema.ObjectId,
     visitId: Schema.ObjectId,
     date_created:   Date,
-    date_updated:  Date,
+   date_updated:  String,
     visitStatus: Boolean,
-    visit_date: Date,
+    visit_date: String,
     status: Number,
     
 }
@@ -55,6 +55,7 @@ const getAllVisits = async (userId, enrollment_date) => {
     const physicalVisitsData = [];
     await  visit.find().then(data =>{
         if(data){
+            console.log(enrollment_date,' Physical &&&&&&&&&&&&&&&&&&&&&&&&&& inserted ',enrollment_date)
            
             
             let physicalVisitDate =  data[0].date_created;
@@ -62,6 +63,8 @@ const getAllVisits = async (userId, enrollment_date) => {
             for(let i = 0; i < data.length; i++){
                 if( i < 3){
                 let { visit_date } =  fistPhaseVisits(data[i].dayFromBaseDate, enrollment_date);
+
+                console.log(' Physical 9999999999999999  inserted ',visit_date)
 
             physicalVisitsData.push({
                 userId: userId,
@@ -80,6 +83,8 @@ const getAllVisits = async (userId, enrollment_date) => {
 
         }
     })
+    console.log('Physical +++++++++++++++++++++++++++2++++++++++++++++++++++++++++++++++ inserted ',physicalVisitsData)
+
 
      await physicalVisit.insertMany(physicalVisitsData).then(res => {
         console.log('Physical visits successfully inserted')

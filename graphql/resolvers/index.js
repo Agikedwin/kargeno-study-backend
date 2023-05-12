@@ -9,6 +9,7 @@ const checkInUsersResolvers = require('./CheckInUser');
 const physicalServicesResolvers = require('./PhysicalVisitServices');
 const phoneCallServicesResolvers = require('./PhoneVisitServices');
 const allTypesOfVisits = require('./allVisitTypes');
+const rescheduledVisits = require('./RecheduledVisits');
 
 module.exports = {
      Query: {
@@ -22,7 +23,8 @@ module.exports = {
       ...checkInUsersResolvers.Query,
       ...allTypesOfVisits.Query,
       ...physicalServicesResolvers.Ouery,
-      ...phoneCallServicesResolvers.Query
+      ...phoneCallServicesResolvers.Query,
+      ...rescheduledVisits.Query
     },
  
     Mutation: {
@@ -35,7 +37,8 @@ module.exports = {
         ...servicesResolvers.Mutation,
         ...checkInUsersResolvers.Mutation,
         ...physicalServicesResolvers.Mutation,
-        ...phoneCallServicesResolvers.Mutation
+        ...phoneCallServicesResolvers.Mutation,
+        ...rescheduledVisits.Mutation
 
     }
 }

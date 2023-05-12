@@ -373,6 +373,33 @@ type  AllVisitsTypes {
 
     
 }
+# 
+type RescheduledVisits {
+    _id: ID!,
+    physicalVisitId: ID!,
+    userId: ID!,
+    visitId: ID!,
+    rescheduled_date: String,
+    visit_date: String,
+    date_created:  String,
+    date_updated:  String,
+    reason: Int,
+    status: Int,
+}
+
+
+input RescheduledVisitsInput {    
+    
+    physicalVisitId: ID!,
+    userId: ID!,
+    visitId: ID!,
+    rescheduled_date: String,
+    visit_date: String,
+    date_created:  String,
+    date_updated:  String,
+    reason: Int,
+    status: Int,
+}
 
 
 type Query {
@@ -388,6 +415,8 @@ type Query {
     getPhoneServices(paramId: String): [PhoneServices]
     getLastServiceProvided(paramId: searParams): [PhysicalServices]
     getAllVisitTypes(paramId: String): [AllVisitsTypes]
+    getAllVisitTypesSummary(paramId: String): [AllVisitsTypes]
+    getRescheduledVisits(paramId: String): [RescheduledVisits]
 
 }
 
@@ -404,13 +433,7 @@ type Mutation {
     postCheckInUser(data:CheckInUserInput ): CheckInUser
     postPhysicalServices(data:[PhysicalServicesInput]): PhysicalServices
     postPhoneServices(data:[PhoneServicesInput]): PhoneServices
-
-
-
-
-
-
-   
+    postRescheduledVisits(data:[RescheduledVisitsInput]): RescheduledVisits
     
 }
 `;

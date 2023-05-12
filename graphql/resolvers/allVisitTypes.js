@@ -13,6 +13,7 @@ const ServicesProvided = require('../../models/PhysicalVisitServices');
 
 
 module.exports = {
+  //
     Query: {
         async getAllVisitTypes(_, paramId, context){
             selectedUserId = new mongoose.Types.ObjectId(paramId.paramId) 
@@ -23,16 +24,7 @@ module.exports = {
                
             let data = [];
             let queryCondition = {}
-        /*     if(selectedUserId){
-                queryCondition  = {
-                    "physicalVisits.userId": selectedUserId,
-                    "phoneCalls.userId": selectedUserId
-                    //"userJoin.name": "foo"                       
-                }
-
-            }else{
-                queryCondition = {}
-            }*/  
+       
  
             try {
 
@@ -76,9 +68,7 @@ module.exports = {
                     
                     data = result;
                     console.log(data);
-                    /* const test = data.physicalVisits.filter(res => { res.userId == selectedUserId 
-                        console.log('ALL VISIT TYPES', res.physicalVisits.userId);
-                    }) */
+                    
                     
                   })
                   .catch((error) => {
@@ -90,11 +80,83 @@ module.exports = {
                 console.log('Error getting all designations', e);
             }
             
-            return data;
+            return data; 
 
            
 
         },
+
+        async getAllVisitTypesSummary(_, paramId, context){
+          selectedUserId = new mongoose.Types.ObjectId(paramId.paramId) 
+          console.log('fetching all visit types ',selectedUserId);
+
+              
+
+             
+          let data = [];
+          let queryCondition = {}     
+
+          try {
+
+            const res = await VisitsTypes.aggregate([{
+                $lookup: {
+                  from: "phonecallvisits",
+                  localField: "_id",
+                  foreignField: "visitId",
+                  as: "phoneCalls_v"
+                }
+              },
+              {
+            $lookup: {
+                  from: "physicalvisits",
+                  localField: "_id",
+                  foreignField: "visitId",
+                  as: "physicalVisits_v"
+                }
+              },
+              {
+                $addFields: {
+                  phoneCalls: {
+                    $filter: {
+                      input: "$phoneCalls_v",
+                      cond: { $eq: ["$$this.visit_date" , "2023-05-16"] }
+                    }
+                  }
+                }
+              },
+               {
+                $addFields: {
+                  physicalVisits: {
+                    $filter: {
+                      input: "$physicalVisits_v",
+                      cond: { $eq: ["$$this.visit_date" , "2023-05-16"] }
+                    }
+                  }
+                }
+              }
+              ]).then((result) => {
+                
+                data = result;
+                console.log(data);
+                /* const test = data.physicalVisits.filter(res => { res.userId == selectedUserId 
+                    console.log('ALL VISIT TYPES', res.physicalVisits.userId);
+                }) */
+                
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+            
+
+        }catch(e){
+            console.log('Error getting all designations', e);
+        }
+        
+        return data;
+
+         
+
+      },
 
     },
 

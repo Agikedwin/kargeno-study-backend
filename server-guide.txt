@@ -4,6 +4,8 @@
   mongodb populate: https://dev.to/paras594/how-to-use-populate-in-mongoose-node-js-mo0
   mongo docs : https://www.mongodb.com/docs/manual/reference/operator/aggregation/lookup/
 
+  MONDO GROUP FACET :: https://medium.com/assembly-engineering/using-mongodb-facet-aggregation-to-solve-a-real-world-problem-48f02d6b6e76
+
   client_code
   date_created
   date_updated

@@ -15,8 +15,8 @@ const userSchema = new Schema({
     password:  String,
     editor: String,
     status: Number,
-    date_created:  Date,
-    date_updated:  Date,
+    date_created:  String,
+   date_updated:  String,
 
 
   designation_ref: {

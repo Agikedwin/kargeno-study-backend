@@ -3,8 +3,8 @@ const { model, Schema}  = require('mongoose');
 const userProgramsSchema = new Schema({
     userId: Schema.ObjectId,
     programId: Schema.ObjectId,
-    date_created:  Date,
-    date_updated:  Date,
+    date_created:  String,
+   date_updated:  String,
     enrollStatus: Boolean,
     enrollment_date: Date,
     status: Number,

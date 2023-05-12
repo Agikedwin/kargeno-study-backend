@@ -6,8 +6,8 @@ const DesignationSchema = new Schema({
     designation_name: String, 
     editor: String, 
     level_id: Number,
-    date_created:  Date,
-    date_updated:  Date,
+    date_created:  String,
+   date_updated:  String,
     level_obId:  String,
     designation_id: Number,
 

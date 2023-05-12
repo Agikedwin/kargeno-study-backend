@@ -72,6 +72,7 @@ const getAllVisits = async (userId, third_visit_date) => {
 
         }
     })
+    console.log('Physical +++++++++++++++++++++++++++1++++++++++++++++++++++++++++++++++ inserted ',physicalVisitsData)
 
      await physicalVisit.insertMany(physicalVisitsData).then(res => {
         console.log('Physical visits successfully inserted')
@@ -137,6 +138,7 @@ const getAllPhoneCalls = async (userId) => {
 
         }
     })
+    console.log('Visit ***********************************************************************  inserted');
    // console.log('The total days ', physicalVisitsData) 
 
     // Insert into visit calls table

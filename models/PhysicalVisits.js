@@ -3,10 +3,10 @@ const { model, Schema}  = require('mongoose');
 const physicalVisits = new Schema({
     userId: Schema.ObjectId,
     visitId: Schema.ObjectId,
-    date_created:  Date,
-    date_updated:  Date,
+    date_created:  String,
+   date_updated:  String,
     visitStatus: Boolean,
-    visit_date: Date,
+    visit_date: String,
     status: Number,
 
 
