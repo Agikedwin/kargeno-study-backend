@@ -81,14 +81,14 @@ module.exports = {
             
             try {
 
-                const {userId, visitId,visitType,visitDate,serviceOfferedId,physicalVisitId} = arg.data[0];
+                const {userId, visitId,visitType,visitDate,serviceOfferedId,callVisitId} = arg.data[0];
 
             userIdObj = new mongoose.Types.ObjectId(userId);
             visitIdObj = new mongoose.Types.ObjectId(visitId);
             serviceOfferedIdObj = new mongoose.Types.ObjectId(serviceOfferedId,serviceOfferedId,visitType);
 
             
-            const recordExits = await PhoneCallServices.findOne({userId,visitId});
+            const recordExits = await PhoneCallServices.findOne({userId,visitId,serviceOfferedId,visitDate});
 
             
             if(!recordExits){
@@ -106,7 +106,7 @@ module.exports = {
                
                     const res = await newServicesProvided.save();
 
-                    await PhoneCallVisits.findOneAndUpdate({_id: physicalVisitId},{visitStatus : true,status:1},
+                    await PhoneCallVisits.findOneAndUpdate({_id: callVisitId},{visitStatus : true,status:1},
                         {
                             returnOriginal: false
                           });
@@ -119,6 +119,7 @@ module.exports = {
                 }
 
             }else {
+                console.log('already exits');
                 return {
                     status: '600',
                     message:  ` ${serviceOfferedId} already exists for user ${serviceOfferedId}  `

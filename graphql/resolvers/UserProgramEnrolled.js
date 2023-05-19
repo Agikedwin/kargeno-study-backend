@@ -10,6 +10,7 @@ const phoneCallVisits = require('../../models/PhoneCallVisits');
 
 
 const visit = require('../../models/Visits');
+const User = require('../../models/User');
 
 const { validateCreateUser, validateLogin, validateLevel } = require('../../utils/Validators');
 
@@ -55,7 +56,6 @@ const getAllVisits = async (userId, enrollment_date) => {
     const physicalVisitsData = [];
     await  visit.find().then(data =>{
         if(data){
-            console.log(enrollment_date,' Physical &&&&&&&&&&&&&&&&&&&&&&&&&& inserted ',enrollment_date)
            
             
             let physicalVisitDate =  data[0].date_created;
@@ -64,7 +64,6 @@ const getAllVisits = async (userId, enrollment_date) => {
                 if( i < 3){
                 let { visit_date } =  fistPhaseVisits(data[i].dayFromBaseDate, enrollment_date);
 
-                console.log(' Physical 9999999999999999  inserted ',visit_date)
 
             physicalVisitsData.push({
                 userId: userId,
@@ -83,13 +82,18 @@ const getAllVisits = async (userId, enrollment_date) => {
 
         }
     })
-    console.log('Physical +++++++++++++++++++++++++++2++++++++++++++++++++++++++++++++++ inserted ',physicalVisitsData)
 
 
      await physicalVisit.insertMany(physicalVisitsData).then(res => {
         console.log('Physical visits successfully inserted')
         getAllPhoneCalls(userId);
      });
+
+     // update user status to 1 after enrollment
+     await User.findOneAndUpdate({_id: userId},{status:1},
+        {
+            returnOriginal: false
+          });
        
 }
 
@@ -99,7 +103,6 @@ const getAllPhoneCalls = async (userId) => {
     // get user specific visits
     await  physicalVisit.find({userId: userIdObj}).then(data =>{
         if(data){       
-            console.log( 'End of visit --------------------data --------------------------- ',data.length)
             
             
             // compose vist array
@@ -107,7 +110,6 @@ const getAllPhoneCalls = async (userId) => {
                 if(i == 3){
                    // break;
                 }
-                console.log( 'End of visit --------------------At visit --------------------------- ',i)
 
                 let daysDiff = new Date(data[i+1].visit_date).getTime()  -  new Date(data[i].visit_date).getTime();
                 let totalDays = Math.ceil(daysDiff / (1000 * 3600 * 24));

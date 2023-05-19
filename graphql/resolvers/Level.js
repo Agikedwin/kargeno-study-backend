@@ -56,8 +56,8 @@ module.exports = {
 
        
         async createLevel(_, args, info){
-            console.log('Creating level', args.levelIput);
-            const { level_name, description} = args.levelIput
+            console.log('Creating level', args.data);
+            const { level_name, description} = args.data
             console.log(description,'  Creating level ',level_name);
 
             const { errors, valid } = validateLevel(level_name)

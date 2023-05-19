@@ -41,6 +41,7 @@ type User {
     date_updated: String,
     }
 type UserQuery  {
+    
     _id: ID!,
     surname: String!,
     other_names: String,
@@ -59,7 +60,10 @@ type UserQuery  {
     date_updated: String,
     token: String,
     designation: [DesignationObj],
-    level: [Level]
+    level: [Level],
+    visits:[Visits],
+    phonecalls: [PhoneCallVisits] 
+
 
 }
 type userDesignation {
@@ -182,7 +186,7 @@ input UserProgramInput {
 # Visits
 
 type Visits {
-    id: ID!,
+    id: ID,
     visitName: String,
     visitNumber: String,
     program_id: ID,
@@ -354,6 +358,24 @@ type  PhysicalCallVisits {
     status: Int,
     
 }
+# User composed all visits object
+
+
+# User visits made
+
+type  UserVisitsMade {
+
+    _id: ID,
+    userId: ID,
+    visitId: ID,
+    date_created:  String,
+    date_updated:  String,
+    visitStatus: Boolean,
+    visit_date: String,
+    status: Int,
+    users:[UserQuery]
+    
+}
 
 # All  visit types
 type  AllVisitsTypes {
@@ -368,12 +390,28 @@ type  AllVisitsTypes {
     date_updated: String,
     physicalVisits: [PhysicalCallVisits]
     status: String,
-    phoneCalls: [PhoneCallVisits]
-    
+    phoneCalls: [PhoneCallVisits] 
 
     
 }
-# 
+#  user all visit by date ranges
+type  AllVisitsTypes {
+    _id: ID!,
+    visitName: String,
+    visitNumber: String,
+    program_id: ID,
+    windowPeriod: String,
+    dayFromBaseDate: String,
+    description: String,
+    date_created: String,
+    date_updated: String,
+    physicalVisits: [PhysicalCallVisits]
+    status: String,
+    phoneCalls: [PhoneCallVisits] 
+
+    
+}
+
 type RescheduledVisits {
     _id: ID!,
     physicalVisitId: ID!,
@@ -417,6 +455,8 @@ type Query {
     getAllVisitTypes(paramId: String): [AllVisitsTypes]
     getAllVisitTypesSummary(paramId: String): [AllVisitsTypes]
     getRescheduledVisits(paramId: String): [RescheduledVisits]
+    getUserAllVisitTypesSummary(paramId: String): [AllVisitsTypes]
+    getAllVisitsMade(paramId: String) : [UserVisitsMade]
 
 }
 

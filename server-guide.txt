@@ -42,3 +42,154 @@
   level_name
   userid 
   =========================
+
+  db.getCollection('physicalvisits').aggregate([
+        {
+                        $match: {
+                           // "visit_date": "2023-04-01"
+                        }
+                    },
+    {
+                $lookup: {
+                    from: "users",
+                    let: { "userId": "$userId" ,"visitId": "$visitId"  },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: { $eq: ["$_id", "$$userId"] }
+                            }
+                        },
+                        {
+                            $lookup: {
+                                from: "userlevels",
+                                let: {"level_id": "$level_id"  },
+                                pipeline: [
+                                    {
+                                        $match: {
+                                            $expr: { $eq: ["$level_id", "$$level_id"] }
+                                        }
+                                    },
+                                ],
+                                as: "levels"
+                            },
+                        },
+                        {
+                            $lookup: {
+                                from: "designations",
+                                let: {"level_id": "$level_id"  },
+                                pipeline: [
+                                    {
+                                        $match: {
+                                            $expr: { $eq: ["$level_id", "$$level_id"] }
+                                        }
+                                    },
+                                ],
+                                as: "designations"
+                            },
+                        },
+                        {
+                            $lookup: {
+                                from: "phonecallvisits",
+                                pipeline: [
+                                    {
+                                        $match: {
+                                            "visit_date": "2023-04-01",
+                                            $expr: { $eq: ["$visitId", "$$visitId"] }
+                                        }
+                                    },
+                                ],
+                                as: "phonecalls"
+                            },
+                        },
+                        {
+                            $lookup: {
+                                from: "visits",
+                                pipeline: [
+                                    {
+                                        $match: {
+                                            $expr: { $eq: ["$_id", "$$visitId"] }
+                                        }
+                                    },
+                                ],
+                                as: "visitTypes"
+                            },
+                        },
+                    ],
+                    as: "users"
+                }
+            } ])
+
+
+
+            ======================================
+             {
+  getAllVisitsMade {
+    _id
+    userId
+    visitId
+    date_created
+    date_updated
+    visitStatus
+    visit_date
+    status
+     users {
+       _id
+        surname
+        other_names
+        designation_id
+        level_id
+        dob
+        email
+        phone_number
+        patient_identifier
+        gender
+        username
+        password
+        status
+        editor
+        date_created
+        date_updated
+        token
+        level {
+          _id
+          level_name
+          description
+          date_created
+          date_updated
+          level_id
+        }
+        designation {
+         _id
+        description
+        designation_name
+        editor
+        level_id
+        date_created
+        date_updated        
+        designation_id
+        }
+        phonecalls {
+          _id
+          userId
+          visitId
+          date_created
+          date_updated
+          visitStatus
+          visit_date
+          status
+        }
+        visits {
+          id
+          visitName
+          visitNumber
+          program_id
+          windowPeriod
+          dayFromBaseDate
+          description
+          date_created
+          date_updated
+          status
+        }
+     }
+  }
+}
